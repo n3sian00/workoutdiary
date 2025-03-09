@@ -4,18 +4,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DatePicker from '../components/Datetimepicker';
 import styles from '../styles/styles';
 
-export default function Home({ navigation }) {
+// Sovelluksen etusivu, jossa voi lisätä uusia harjoituksia ja tallentaa ne AsyncStorageen
+
+
+export default function Home({ navigation }) { // useState tallentaa syöttämät tiedot
     const [sport, setSport] = useState('');
     const [distance, setDistance] = useState('');
     const [duration, setDuration] = useState('');
     const [date, setDate] = useState(null);
     const [showAlert, setShowAlert] = useState(false);
     
-    useEffect(() => {
+    useEffect(() => {  // useEffect lataa tallennetut harjoitukset
         loadExercises();
     }, []);
 
-    const saveExercise = async (newExercise) => {
+    const saveExercise = async (newExercise) => {   // Harjoitukset tallennetaan
         try {
             const storedExercises = await AsyncStorage.getItem('exercises');
             const exercises = storedExercises ? JSON.parse(storedExercises) : [];
@@ -26,18 +29,18 @@ export default function Home({ navigation }) {
         }
     };
 
-    const loadExercises = async () => {
+    const loadExercises = async () => { // LoadExercises tarkistaa onko AsynStoragessa tallennettuja harjoituksia
         try {
             const storedExercises = await AsyncStorage.getItem('exercises');
             if (storedExercises) {
-                console.log('Loaded exercises:', JSON.parse(storedExercises));
+                console.log('Loaded exercises', JSON.parse(storedExercises));
             }
         } catch (error) {
-            console.error('Error loading exercises:', error);
+            console.error('Error loading exercises', error);
         }
     };
 
-    const addExercise = async () => {
+    const addExercise = async () => { // Lisää uuden harjoitukset
         if (sport.trim() && distance.trim() && duration.trim() && date) {
             Keyboard.dismiss();
             
@@ -50,7 +53,7 @@ export default function Home({ navigation }) {
 
             await saveExercise(newExercise);
             setShowAlert(true);
-            setTimeout(() => setShowAlert(false), 2000);
+            setTimeout(() => setShowAlert(false), 2000); 
 
             setSport('');
             setDistance('');

@@ -4,11 +4,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import styles from '../styles/styles';
 
+// Settings sivulla voi poistaa kaikki tallennetut harjoitukset
+
 export default function Settings({ navigation }) {
     const [cleared, setCleared] = useState(false);
     const [updateHistory, setUpdateHistory] = useState(false); 
 
-    const clearExercises = async () => {
+    const clearExercises = async () => { // Tyhjentää tallennetut harjoitutukset
         Alert.alert(
             'Clear all exercises?',
             'This will permanently delete all saved exercises',
@@ -17,7 +19,7 @@ export default function Settings({ navigation }) {
                 {
                     text: 'OK',
                     onPress: async () => {
-                        await AsyncStorage.removeItem('exercises'); 
+                        await AsyncStorage.removeItem('exercises'); // Poistaa tallennetut harjoitukset AsyncStoragesta
                         setCleared(true);
                         setUpdateHistory(prev => !prev);
                         setTimeout(() => setCleared(false), 2000);
@@ -27,7 +29,7 @@ export default function Settings({ navigation }) {
         );
     };
 
-    useFocusEffect(
+    useFocusEffect( // Nollaa näkymän
         useCallback(() => {
             setCleared(false);
         }, [])

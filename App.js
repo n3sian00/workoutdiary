@@ -8,6 +8,8 @@ import History from './screens/History';
 import Settings from './screens/Settings';
 import styles from './styles/styles';
 
+// Navigointi
+
 const Tab = createBottomTabNavigator();
 
 export default function App() {

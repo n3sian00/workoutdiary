@@ -5,19 +5,21 @@ import { useFocusEffect } from '@react-navigation/native';
 import WorkoutModal from '../components/WorkoutModal';
 import styles from '../styles/styles';
 
-export default function History() {
-    const [exercises, setExercises] = useState([]);
-    const [modalVisible, setModalVisible] = useState(false);
-    const [totalDistance, setTotalDistance] = useState(0);
-    const [totalDuration, setTotalDuration] = useState(0);
+// History sivu näyttää yhteenvedon tallennetuista harjoituksista
 
-    useFocusEffect(
+export default function History() {
+    const [exercises, setExercises] = useState([]); // Tallennetut harjoitukset
+    const [modalVisible, setModalVisible] = useState(false); // Näyttää modaalin, jossa kaikki harjoitukset
+    const [totalDistance, setTotalDistance] = useState(0); // Laskee matkat
+    const [totalDuration, setTotalDuration] = useState(0); // Laskee kestot
+
+    useFocusEffect( // Päivittää ja lataa harjoitukset kun sivu avataan
         useCallback(() => {
-            loadExercises();
+            loadExercises(); 
         }, [])
     );
 
-    const loadExercises = async () => {
+    const loadExercises = async () => {  
         try {
             const storedExercises = await AsyncStorage.getItem('exercises');
             if (storedExercises) {
